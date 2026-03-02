@@ -98,58 +98,62 @@ wn.onkeypress(paddle_b_down,"Down")
 
 
 #main game loop
-while True:
-    wn.update()
+try:
+    while True:
+        wn.update()
 
-    #Move the ball
-    ball.setx(ball.xcor()+ball.dx)
-    ball.sety(ball.ycor()+ball.dy)
+        #Move the ball
+        ball.setx(ball.xcor()+ball.dx)
+        ball.sety(ball.ycor()+ball.dy)
 
-    #Border checking
-    if ball.ycor()>290:
-        ball.sety(290)
-        ball.dy*=-1
-        winsound.PlaySound(BOUNCE_SND, winsound.SND_ASYNC)
+        #Border checking
+        if ball.ycor()>290:
+            ball.sety(290)
+            ball.dy*=-1
+            winsound.PlaySound(BOUNCE_SND, winsound.SND_ASYNC)
 
-    if ball.ycor()<-290:
-        ball.sety(-290)
-        ball.dy*=-1
-        winsound.PlaySound(BOUNCE_SND, winsound.SND_ASYNC)
+        if ball.ycor()<-290:
+            ball.sety(-290)
+            ball.dy*=-1
+            winsound.PlaySound(BOUNCE_SND, winsound.SND_ASYNC)
 
-    if ball.xcor()>390:
-        ball.goto(0,0)
-        ball.dx*=-1
-        score_a+=1
-        pen.clear()
-        pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
-        winsound.PlaySound(FAAH_SND, winsound.SND_ASYNC)
-
-        if score_a==10:
+        if ball.xcor()>390:
+            ball.goto(0,0)
+            ball.dx*=-1
+            score_a+=1
             pen.clear()
-            pen.write("Player A Wins!", align="center", font=("Courier", 24, "normal"))
-            break
-    if ball.xcor()<-390:
-        ball.goto(0,0)
-        ball.dx*=-1
-        score_b+=1
-        pen.clear()
-        pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
-        winsound.PlaySound(FAAH_SND, winsound.SND_ASYNC)
+            pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
+            winsound.PlaySound(FAAH_SND, winsound.SND_ASYNC)
 
-        if score_b==10:
+            if score_a==10:
+                pen.clear()
+                pen.write("Player A Wins!", align="center", font=("Courier", 24, "normal"))
+                break
+        if ball.xcor()<-390:
+            ball.goto(0,0)
+            ball.dx*=-1
+            score_b+=1
             pen.clear()
-            pen.write("Player B Wins!", align="center", font=("Courier", 24, "normal"))
-            break
+            pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
+            winsound.PlaySound(FAAH_SND, winsound.SND_ASYNC)
+
+            if score_b==10:
+                pen.clear()
+                pen.write("Player B Wins!", align="center", font=("Courier", 24, "normal"))
+                break
 
 
-    #paddle and ball collision
-    if (ball.xcor()>340 and ball.xcor()<350) and (ball.ycor()<paddle_b.ycor()+40 and ball.ycor()>paddle_b.ycor()-40):
-        ball.setx(340)
-        ball.dx *= -1
-        winsound.PlaySound(BOUNCE_SND, winsound.SND_ASYNC)
+        #paddle and ball collision
+        if (ball.xcor()>340 and ball.xcor()<350) and (ball.ycor()<paddle_b.ycor()+40 and ball.ycor()>paddle_b.ycor()-40):
+            ball.setx(340)
+            ball.dx *= -1
+            winsound.PlaySound(BOUNCE_SND, winsound.SND_ASYNC)
 
-    if (ball.xcor()<-340 and ball.xcor()>-350) and (ball.ycor()<paddle_a.ycor()+40 and ball.ycor()>paddle_a.ycor()-40):
-        ball.setx(-340)
-        ball.dx *= -1
-        winsound.PlaySound(BOUNCE_SND, winsound.SND_ASYNC)
+        if (ball.xcor()<-340 and ball.xcor()>-350) and (ball.ycor()<paddle_a.ycor()+40 and ball.ycor()>paddle_a.ycor()-40):
+            ball.setx(-340)
+            ball.dx *= -1
+            winsound.PlaySound(BOUNCE_SND, winsound.SND_ASYNC)
+
+except Exception:
+    pass  # Window was closed mid-game — exit cleanly
 
