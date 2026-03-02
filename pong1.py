@@ -1,5 +1,18 @@
 import turtle
 import winsound
+import sys
+import os
+
+def resource_path(relative_path):
+    """Get absolute path to resource, works for dev and for PyInstaller."""
+    try:
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
+BOUNCE_SND = resource_path("bounce.wav")
+FAAH_SND   = resource_path("faah.wav")
 
 wn=turtle.Screen()
 wn.title("Pong game by Ekank")
@@ -96,12 +109,12 @@ while True:
     if ball.ycor()>290:
         ball.sety(290)
         ball.dy*=-1
-        winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
+        winsound.PlaySound(BOUNCE_SND, winsound.SND_ASYNC)
 
     if ball.ycor()<-290:
         ball.sety(-290)
         ball.dy*=-1
-        winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
+        winsound.PlaySound(BOUNCE_SND, winsound.SND_ASYNC)
 
     if ball.xcor()>390:
         ball.goto(0,0)
@@ -109,7 +122,7 @@ while True:
         score_a+=1
         pen.clear()
         pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
-        winsound.PlaySound("faah.wav", winsound.SND_ASYNC)
+        winsound.PlaySound(FAAH_SND, winsound.SND_ASYNC)
 
         if score_a==10:
             pen.clear()
@@ -121,7 +134,7 @@ while True:
         score_b+=1
         pen.clear()
         pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
-        winsound.PlaySound("faah.wav", winsound.SND_ASYNC)
+        winsound.PlaySound(FAAH_SND, winsound.SND_ASYNC)
 
         if score_b==10:
             pen.clear()
@@ -133,10 +146,10 @@ while True:
     if (ball.xcor()>340 and ball.xcor()<350) and (ball.ycor()<paddle_b.ycor()+40 and ball.ycor()>paddle_b.ycor()-40):
         ball.setx(340)
         ball.dx *= -1
-        winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
+        winsound.PlaySound(BOUNCE_SND, winsound.SND_ASYNC)
 
     if (ball.xcor()<-340 and ball.xcor()>-350) and (ball.ycor()<paddle_a.ycor()+40 and ball.ycor()>paddle_a.ycor()-40):
         ball.setx(-340)
         ball.dx *= -1
-        winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
+        winsound.PlaySound(BOUNCE_SND, winsound.SND_ASYNC)
 
